@@ -94,7 +94,7 @@ if pergunta:
     try:
 
         resposta_api = client.models.generate_content(
-            model="gemini-3.1-flash-lite",
+            model="gemini-3.1-flash-lite",,
             contents=historico,
             config=types.GenerateContentConfig(
                 system_instruction=PERSONALIDADE,
