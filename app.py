@@ -213,13 +213,35 @@ def gerar_resposta():
 
 def gerar_voz(texto):
 
-    audio = client_fish.tts.convert(
-        text=texto,
-        model="s2.1-pro",
-        reference_id=FISH_AUDIO_VOICE_ID
+    import requests
+
+    url = "https://api.fish.audio/v1/tts"
+
+    headers = {
+        "Authorization": f"Bearer {FISH_AUDIO_API_KEY}",
+        "Content-Type": "application/json",
+        "model": "s2.1-pro-free"
+    }
+
+    dados = {
+        "text": texto,
+        "reference_id": FISH_AUDIO_VOICE_ID,
+        "format": "mp3"
+    }
+
+    resposta = requests.post(
+        url,
+        headers=headers,
+        json=dados,
+        timeout=120
     )
 
-    return audio
+    if resposta.status_code != 200:
+        raise Exception(
+            f"Fish Audio {resposta.status_code}: {resposta.text}"
+        )
+
+    return resposta.content
 
 # =========================================================
 # MOSTRAR HISTÓRICO
