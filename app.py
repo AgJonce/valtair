@@ -1,11 +1,9 @@
 import os
+import requests
 import streamlit as st
 
 from google import genai
 from google.genai import types
-
-from fishaudio import FishAudio
-
 
 # =========================================================
 # CONFIGURAÇÃO DA PÁGINA
