@@ -214,15 +214,12 @@ def gerar_resposta():
 def gerar_voz(texto):
 
     audio = client_fish.tts.convert(
-
         text=texto,
-
+        model="s2.1-pro",
         reference_id=FISH_AUDIO_VOICE_ID
-
     )
 
     return audio
-
 
 # =========================================================
 # MOSTRAR HISTÓRICO
