@@ -62,12 +62,10 @@ Sua personalidade é:
 
 Você pode usar naturalmente expressões como:
 
-"rapaz"
 "ó lacraia"
 "ô liao"
 "cê tá de sacanagem"
 "aí você me quebra"
-"kkkk"
 
 Mas NÃO use essas expressões em toda resposta.
 
@@ -111,28 +109,28 @@ Usuário:
 "Fiz merda."
 
 VALTAIR:
-"Rapaz... pela introdução já vi que vem história boa kkkkk.
+"Liao... pela introdução já vi que vem história boa kkkkk.
 O que cê arrumou?"
 
 Usuário:
 "Tô pensando em mandar mensagem pra minha ex."
 
 VALTAIR:
-"Meu filho... larga esse celular dois minutos kkkkk.
+"Ah lacraia ... larga esse celular dois minutos kkkkk.
 Primeiro me conta o que aconteceu pra essa ideia brilhante aparecer."
 
 Usuário:
 "Consegui terminar o projeto."
 
 VALTAIR:
-"Aí sim, rapaz! Finalmente essa desgraça saiu do papel kkkkk.
+"Aí sim, liao! Finalmente essa desgraça saiu do papel kkkkk.
 Ficou funcionando direito ou tá funcionando na base da fé?"
 
 Usuário:
 "Tô mal hoje."
 
 VALTAIR:
-"Então me conta o que aconteceu.
+"Então me conta o que aconteceu Liao do pai .
 Hoje eu não vou ficar fazendo piadinha antes de saber como cê tá."
 
 Seu nome é VALTAIR.
@@ -157,525 +155,434 @@ if "mensagens" not in st.session_state:
 
 def configurar_visual():
 
+    # =====================================================
+    # CSS DO SISTEMA
+    # =====================================================
+
     st.markdown("""
-    <style>
+<style>
+.stApp {
+    background:
+        radial-gradient(circle at 50% 35%, rgba(0, 120, 190, 0.18), transparent 30%),
+        linear-gradient(180deg, #01060b 0%, #020a11 55%, #010409 100%);
+    color: #d8f8ff;
+}
 
-    /* FUNDO */
-    .stApp {
-        background:
-            radial-gradient(
-                circle at center,
-                #061827 0%,
-                #020910 45%,
-                #000204 100%
-            );
-        color: #d8f8ff;
+.stApp::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0, 190, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 190, 255, 0.035) 1px, transparent 1px);
+    background-size: 47px 47px;
+    pointer-events: none;
+}
+
+.block-container {
+    max-width: 1250px;
+    padding-top: 15px;
+    padding-bottom: 120px;
+}
+
+#MainMenu {
+    visibility: hidden;
+}
+
+footer {
+    visibility: hidden;
+}
+
+/* TÍTULO */
+
+.valtair-title {
+    text-align: center;
+    font-family: monospace;
+    font-size: 34px;
+    font-weight: bold;
+    letter-spacing: 15px;
+    color: #a8efff;
+    text-shadow:
+        0 0 8px #00bfff,
+        0 0 25px rgba(0, 191, 255, 0.6);
+    margin-top: 5px;
+}
+
+.valtair-subtitle {
+    text-align: center;
+    font-family: monospace;
+    color: #24a8d5;
+    font-size: 9px;
+    letter-spacing: 8px;
+    margin-top: 6px;
+    margin-bottom: 5px;
+}
+
+/* ÁREA HUD */
+
+.hud {
+    position: relative;
+    width: 100%;
+    height: 410px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border-top: 1px solid rgba(0, 190, 255, 0.25);
+    border-bottom: 1px solid rgba(0, 190, 255, 0.18);
+}
+
+.hud::before {
+    content: "";
+    position: absolute;
+    top: 30px;
+    left: 5%;
+    width: 90%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 210, 255, .8),
+        transparent
+    );
+    box-shadow: 0 0 8px #00bfff;
+}
+
+/* CÍRCULO EXTERNO */
+
+.hud-circle-1 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 285px;
+    height: 285px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 195, 255, .35);
+    box-shadow:
+        0 0 20px rgba(0, 190, 255, .15),
+        inset 0 0 25px rgba(0, 190, 255, .08);
+    animation: giro1 22s linear infinite;
+}
+
+.hud-circle-1::before {
+    content: "";
+    position: absolute;
+    inset: 17px;
+    border-radius: 50%;
+    border: 7px dashed rgba(0, 195, 255, .40);
+}
+
+/* CÍRCULO 2 */
+
+.hud-circle-2 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 3px dotted rgba(52, 215, 255, .65);
+    box-shadow:
+        0 0 20px rgba(0, 190, 255, .12),
+        inset 0 0 25px rgba(0, 190, 255, .12);
+    animation: giro2 13s linear infinite;
+}
+
+/* CÍRCULO 3 */
+
+.hud-circle-3 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 155px;
+    height: 155px;
+    border-radius: 50%;
+    border: 5px dashed rgba(0, 220, 255, .58);
+    animation: giro1 8s linear infinite;
+}
+
+/* CÍRCULO 4 */
+
+.hud-circle-4 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    border: 2px solid rgba(120, 235, 255, .8);
+    animation: giro2 5s linear infinite;
+}
+
+/* NÚCLEO */
+
+.hud-core {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            white 0%,
+            #b9f9ff 7%,
+            #00d9ff 20%,
+            #007fa8 42%,
+            rgba(0, 80, 120, .25) 63%,
+            transparent 74%
+        );
+
+    box-shadow:
+        0 0 10px #00e5ff,
+        0 0 25px #00bfff,
+        0 0 55px rgba(0, 191, 255, .75),
+        0 0 100px rgba(0, 191, 255, .30);
+
+    animation: pulsar 2s ease-in-out infinite;
+}
+
+/* PAINEL ESQUERDO */
+
+.left-panel {
+    position: absolute;
+    left: 4%;
+    top: 100px;
+    width: 230px;
+    padding: 12px 0 12px 15px;
+
+    border-left: 2px solid rgba(0, 190, 255, .55);
+
+    font-family: monospace;
+    font-size: 10px;
+    line-height: 2;
+
+    color: #32c9f5;
+
+    text-shadow: 0 0 6px rgba(0, 190, 255, .5);
+}
+
+/* PAINEL DIREITO */
+
+.right-panel {
+    position: absolute;
+    right: 4%;
+    top: 100px;
+    width: 230px;
+    padding: 12px 15px 12px 0;
+
+    border-right: 2px solid rgba(0, 190, 255, .55);
+
+    text-align: right;
+
+    font-family: monospace;
+    font-size: 10px;
+    line-height: 2;
+
+    color: #32c9f5;
+
+    text-shadow: 0 0 6px rgba(0, 190, 255, .5);
+}
+
+/* DETALHES */
+
+.hud-label-left {
+    position: absolute;
+    left: 24%;
+    top: 55px;
+
+    font-family: monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+
+    color: #1688b3;
+}
+
+.hud-label-right {
+    position: absolute;
+    right: 24%;
+    bottom: 55px;
+
+    font-family: monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+
+    color: #1688b3;
+}
+
+/* STATUS */
+
+.core-status {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+
+    font-family: monospace;
+    font-size: 9px;
+    letter-spacing: 5px;
+
+    color: #00e5ff;
+
+    text-shadow:
+        0 0 7px #00bfff,
+        0 0 15px rgba(0, 191, 255, .6);
+}
+
+/* ANIMAÇÕES */
+
+@keyframes giro1 {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
     }
 
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
 
-    /* GRADE TECNOLÓGICA */
-    .stApp::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-
-        background-image:
-            linear-gradient(
-                rgba(0, 190, 255, 0.035) 1px,
-                transparent 1px
-            ),
-            linear-gradient(
-                90deg,
-                rgba(0, 190, 255, 0.035) 1px,
-                transparent 1px
-            );
-
-        background-size: 40px 40px;
-
-        pointer-events: none;
+@keyframes giro2 {
+    from {
+        transform: translate(-50%, -50%) rotate(360deg);
     }
 
+    to {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+}
 
-    /* LARGURA DA TELA */
-    .block-container {
-        max-width: 1200px;
-        padding-top: 15px;
-        padding-bottom: 120px;
+@keyframes pulsar {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(.90);
+        opacity: .75;
     }
 
-
-    /* TÍTULO */
-    .valtair-title {
-        text-align: center;
-
-        font-size: 34px;
-        font-weight: 300;
-
-        letter-spacing: 14px;
-
-        color: #c2f7ff;
-
-        text-shadow:
-            0 0 8px #00bfff,
-            0 0 25px rgba(0,191,255,.5);
-
-        margin-top: 5px;
+    50% {
+        transform: translate(-50%, -50%) scale(1.15);
+        opacity: 1;
     }
+}
 
+/* CHAT */
 
-    .valtair-subtitle {
-        text-align: center;
+[data-testid="stChatMessage"] {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 80, 120, .12),
+            rgba(0, 15, 25, .72)
+        );
 
-        color: #248db5;
+    border: 1px solid rgba(0, 190, 255, .20);
+    border-left: 2px solid #00a9df;
 
-        font-size: 9px;
+    border-radius: 3px;
 
-        letter-spacing: 6px;
+    backdrop-filter: blur(8px);
 
-        margin-top: 5px;
-    }
+    box-shadow:
+        0 0 15px rgba(0, 190, 255, .04);
+}
 
+/* INPUT */
 
-    /* HUD */
+[data-testid="stChatInput"] {
+    background: rgba(0, 10, 18, .96);
+
+    border: 1px solid rgba(0, 190, 255, .50);
+
+    border-radius: 3px;
+
+    box-shadow:
+        0 0 18px rgba(0, 190, 255, .12);
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
     .hud {
-        position: relative;
-
-        height: 390px;
-
-        margin-top: 15px;
-        margin-bottom: 20px;
-
-        border-top:
-            1px solid rgba(0,190,255,.25);
-
-        border-bottom:
-            1px solid rgba(0,190,255,.15);
-
-        overflow: hidden;
+        height: 310px;
     }
 
-
-    /* LINHA SUPERIOR */
-    .hud-line {
-        position: absolute;
-
-        top: 25px;
-        left: 5%;
-
-        width: 90%;
-        height: 1px;
-
-        background:
-            linear-gradient(
-                90deg,
-                transparent,
-                #00bfff,
-                transparent
-            );
-
-        box-shadow:
-            0 0 8px #00bfff;
-    }
-
-
-    /* CÍRCULO EXTERNO */
     .hud-circle-1 {
-        position: absolute;
-
-        left: 50%;
-        top: 50%;
-
-        width: 270px;
-        height: 270px;
-
-        border-radius: 50%;
-
-        border:
-            2px solid rgba(0,190,255,.35);
-
-        box-shadow:
-            0 0 30px rgba(0,190,255,.15);
-
-        animation:
-            rotateHUD 20s linear infinite;
+        width: 210px;
+        height: 210px;
     }
 
-
-    .hud-circle-1::before {
-        content: "";
-
-        position: absolute;
-
-        inset: 18px;
-
-        border-radius: 50%;
-
-        border:
-            8px dashed rgba(0,190,255,.40);
-
-        animation:
-            rotateInside 12s linear infinite;
-    }
-
-
-    /* CÍRCULO MÉDIO */
     .hud-circle-2 {
-        position: absolute;
-
-        left: 50%;
-        top: 50%;
-
-        width: 195px;
-        height: 195px;
-
-        border-radius: 50%;
-
-        border:
-            3px dotted rgba(55,210,255,.70);
-
-        box-shadow:
-            inset 0 0 30px rgba(0,190,255,.12),
-            0 0 15px rgba(0,190,255,.15);
-
-        animation:
-            rotateHUDReverse 9s linear infinite;
+        width: 160px;
+        height: 160px;
     }
 
-
-    /* CÍRCULO INTERNO */
     .hud-circle-3 {
-        position: absolute;
-
-        left: 50%;
-        top: 50%;
-
-        width: 125px;
-        height: 125px;
-
-        border-radius: 50%;
-
-        border:
-            5px dashed rgba(0,220,255,.60);
-
-        animation:
-            rotateHUD 6s linear infinite;
+        width: 110px;
+        height: 110px;
     }
 
-
-    /* NÚCLEO */
-    .hud-core {
-        position: absolute;
-
-        left: 50%;
-        top: 50%;
-
-        width: 55px;
-        height: 55px;
-
-        border-radius: 50%;
-
-        background:
-            radial-gradient(
-                circle,
-                #ffffff 0%,
-                #9bf5ff 5%,
-                #00d9ff 18%,
-                #007da8 40%,
-                rgba(0,80,120,.2) 65%,
-                transparent 75%
-            );
-
-        box-shadow:
-            0 0 10px #00d9ff,
-            0 0 30px #00bfff,
-            0 0 60px rgba(0,190,255,.7),
-            0 0 100px rgba(0,190,255,.25);
-
-        animation:
-            pulseCore 2s ease-in-out infinite;
+    .hud-circle-4 {
+        width: 70px;
+        height: 70px;
     }
 
-
-    /* PAINEL ESQUERDO */
-    .left-panel {
-        position: absolute;
-
-        left: 25px;
-        top: 90px;
-
-        width: 220px;
-
-        color: #28bde9;
-
-        font-family: monospace;
-        font-size: 10px;
-
-        line-height: 1.9;
-
-        opacity: .75;
-
-        border-left:
-            2px solid rgba(0,190,255,.5);
-
-        padding-left: 15px;
+    .left-panel,
+    .right-panel,
+    .hud-label-left,
+    .hud-label-right {
+        display: none;
     }
 
-
-    /* PAINEL DIREITO */
-    .right-panel {
-        position: absolute;
-
-        right: 25px;
-        top: 90px;
-
-        width: 220px;
-
-        text-align: right;
-
-        color: #28bde9;
-
-        font-family: monospace;
-        font-size: 10px;
-
-        line-height: 1.9;
-
-        opacity: .75;
-
-        border-right:
-            2px solid rgba(0,190,255,.5);
-
-        padding-right: 15px;
+    .valtair-title {
+        font-size: 24px;
+        letter-spacing: 8px;
     }
-
-
-    /* STATUS */
-    .core-status {
-        position: absolute;
-
-        left: 50%;
-        bottom: 20px;
-
-        transform: translateX(-50%);
-
-        font-family: monospace;
-
-        font-size: 9px;
-
-        letter-spacing: 4px;
-
-        color: #00d9ff;
-
-        text-shadow:
-            0 0 10px #00bfff;
-    }
-
-
-    /* ANIMAÇÕES */
-    @keyframes rotateHUD {
-
-        from {
-            transform:
-                translate(-50%, -50%)
-                rotate(0deg);
-        }
-
-        to {
-            transform:
-                translate(-50%, -50%)
-                rotate(360deg);
-        }
-    }
-
-
-    @keyframes rotateHUDReverse {
-
-        from {
-            transform:
-                translate(-50%, -50%)
-                rotate(360deg);
-        }
-
-        to {
-            transform:
-                translate(-50%, -50%)
-                rotate(0deg);
-        }
-    }
-
-
-    @keyframes rotateInside {
-
-        from {
-            transform: rotate(0deg);
-        }
-
-        to {
-            transform: rotate(-360deg);
-        }
-    }
-
-
-    @keyframes pulseCore {
-
-        0%, 100% {
-            transform:
-                translate(-50%, -50%)
-                scale(.90);
-
-            opacity: .75;
-        }
-
-        50% {
-            transform:
-                translate(-50%, -50%)
-                scale(1.12);
-
-            opacity: 1;
-        }
-    }
-
-
-    /* CHAT */
-    [data-testid="stChatMessage"] {
-        background:
-            linear-gradient(
-                90deg,
-                rgba(0,90,130,.10),
-                rgba(0,20,35,.60)
-            );
-
-        border:
-            1px solid rgba(0,190,255,.20);
-
-        border-left:
-            2px solid #009dcc;
-
-        border-radius: 4px;
-
-        backdrop-filter: blur(8px);
-    }
-
-
-    /* INPUT */
-    [data-testid="stChatInput"] {
-        background:
-            rgba(0,10,18,.96);
-
-        border:
-            1px solid rgba(0,190,255,.5);
-
-        border-radius: 4px;
-
-        box-shadow:
-            0 0 20px rgba(0,190,255,.12);
-    }
-
-
-    /* ESCONDER STREAMLIT */
-    #MainMenu {
-        visibility: hidden;
-    }
-
-    footer {
-        visibility: hidden;
-    }
-
-
-    /* CELULAR */
-    @media(max-width: 700px) {
-
-        .hud {
-            height: 300px;
-        }
-
-        .hud-circle-1 {
-            width: 200px;
-            height: 200px;
-        }
-
-        .hud-circle-2 {
-            width: 145px;
-            height: 145px;
-        }
-
-        .hud-circle-3 {
-            width: 90px;
-            height: 90px;
-        }
-
-        .left-panel,
-        .right-panel {
-            display: none;
-        }
-
-        .valtair-title {
-            font-size: 24px;
-            letter-spacing: 8px;
-        }
-    }
-
-    </style>
-
-
-    <div class="valtair-title">
-        VALTAIR
-    </div>
-
-    <div class="valtair-subtitle">
-        VIRTUAL ARTIFICIAL INTELLIGENCE SYSTEM
-    </div>
-
-
-    <div class="hud">
-
-        <div class="hud-line"></div>
-
-
-        <div class="left-panel">
-
-            SYSTEM // VALTAIR<br>
-            CORE STATUS: ONLINE<br>
-            NEURAL LINK: ACTIVE<br>
-            VOICE ENGINE: READY<br>
-            MEMORY: STANDBY<br>
-            NETWORK: CONNECTED
-
-        </div>
-
-
-        <div class="right-panel">
-
-            ARTIFICIAL INTELLIGENCE<br>
-            GEMINI ENGINE<br>
-            VOICE SYNTHESIS<br>
-            SECURE CHANNEL<br>
-            CORE SYSTEM 01<br>
-            STATUS // ACTIVE
-
-        </div>
-
-
-        <div class="hud-circle-1"></div>
-
-        <div class="hud-circle-2"></div>
-
-        <div class="hud-circle-3"></div>
-
-        <div class="hud-core"></div>
-
-
-        <div class="core-status">
-            ● VALTAIR ONLINE
-        </div>
-
-    </div>
-
-    """, unsafe_allow_html=True)
-
-
-# =========================================================
-# ATIVAR VISUAL
-# =========================================================
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+    # =====================================================
+    # HTML DO HUD
+    # IMPORTANTE: SEM ESPAÇOS NO COMEÇO DAS LINHAS
+    # =====================================================
+
+    html_hud = """
+<div class="valtair-title">VALTAIR</div>
+<div class="valtair-subtitle">VIRTUAL ARTIFICIAL INTELLIGENCE SYSTEM</div>
+<div class="hud">
+<div class="left-panel">
+SYSTEM // VALTAIR<br>
+CORE STATUS: ONLINE<br>
+NEURAL LINK: ACTIVE<br>
+VOICE ENGINE: READY<br>
+MEMORY: STANDBY<br>
+NETWORK: CONNECTED
+</div>
+<div class="right-panel">
+ARTIFICIAL INTELLIGENCE<br>
+GEMINI ENGINE<br>
+VOICE SYNTHESIS<br>
+SECURE CHANNEL<br>
+CORE SYSTEM 01<br>
+STATUS // ACTIVE
+</div>
+<div class="hud-label-left">SYS.01 // NEURAL INTERFACE</div>
+<div class="hud-label-right">VOICE LINK // CONNECTED</div>
+<div class="hud-circle-1"></div>
+<div class="hud-circle-2"></div>
+<div class="hud-circle-3"></div>
+<div class="hud-circle-4"></div>
+<div class="hud-core"></div>
+<div class="core-status">● VALTAIR ONLINE</div>
+</div>
+"""
+
+    st.markdown(
+        html_hud,
+        unsafe_allow_html=True
+    )
 
 configurar_visual()
 
