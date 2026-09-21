@@ -36,11 +36,6 @@ client_gemini = genai.Client(
     api_key=GEMINI_API_KEY
 )
 
-client_fish = FishAudio(
-    api_key=FISH_AUDIO_API_KEY
-)
-
-
 # =========================================================
 # PERSONALIDADE DO VALTAIR
 # =========================================================
