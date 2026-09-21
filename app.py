@@ -15,9 +15,6 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("🤖 VALTAIR")
-st.caption("Assistente virtual")
-
 
 # =========================================================
 # CHAVES / CONFIGURAÇÕES
@@ -35,6 +32,7 @@ FISH_AUDIO_VOICE_ID = os.environ.get("FISH_AUDIO_VOICE_ID")
 client_gemini = genai.Client(
     api_key=GEMINI_API_KEY
 )
+
 
 # =========================================================
 # PERSONALIDADE DO VALTAIR
@@ -116,14 +114,12 @@ VALTAIR:
 "Rapaz... pela introdução já vi que vem história boa kkkkk.
 O que cê arrumou?"
 
-
 Usuário:
 "Tô pensando em mandar mensagem pra minha ex."
 
 VALTAIR:
 "Meu filho... larga esse celular dois minutos kkkkk.
 Primeiro me conta o que aconteceu pra essa ideia brilhante aparecer."
-
 
 Usuário:
 "Consegui terminar o projeto."
@@ -132,14 +128,12 @@ VALTAIR:
 "Aí sim, rapaz! Finalmente essa desgraça saiu do papel kkkkk.
 Ficou funcionando direito ou tá funcionando na base da fé?"
 
-
 Usuário:
 "Tô mal hoje."
 
 VALTAIR:
 "Então me conta o que aconteceu.
 Hoje eu não vou ficar fazendo piadinha antes de saber como cê tá."
-
 
 Seu nome é VALTAIR.
 
@@ -158,52 +152,225 @@ if "mensagens" not in st.session_state:
 
 
 # =========================================================
-# FUNÇÃO - GERAR RESPOSTA COM GEMINI
+# FUNÇÃO - VISUAL FUTURISTA
 # =========================================================
+
 def configurar_visual():
 
     st.markdown("""
     <style>
 
-    /* Fundo futurista */
+    /* FUNDO */
     .stApp {
         background:
-            radial-gradient(circle at top, #08263a 0%, #02070d 45%, #000000 100%);
-        color: #e8faff;
+            radial-gradient(
+                circle at center,
+                #061827 0%,
+                #020910 45%,
+                #000204 100%
+            );
+        color: #d8f8ff;
     }
 
-    /* Área principal */
+
+    /* GRADE TECNOLÓGICA */
+    .stApp::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+
+        background-image:
+            linear-gradient(
+                rgba(0, 190, 255, 0.035) 1px,
+                transparent 1px
+            ),
+            linear-gradient(
+                90deg,
+                rgba(0, 190, 255, 0.035) 1px,
+                transparent 1px
+            );
+
+        background-size: 40px 40px;
+
+        pointer-events: none;
+    }
+
+
+    /* LARGURA DA TELA */
     .block-container {
-        max-width: 900px;
-        padding-top: 2rem;
+        max-width: 1200px;
+        padding-top: 15px;
+        padding-bottom: 120px;
     }
 
-    /* Título */
-    .valtair-titulo {
+
+    /* TÍTULO */
+    .valtair-title {
         text-align: center;
-        font-size: 42px;
-        font-weight: 700;
-        letter-spacing: 10px;
-        color: #8befff;
+
+        font-size: 34px;
+        font-weight: 300;
+
+        letter-spacing: 14px;
+
+        color: #c2f7ff;
+
         text-shadow:
-            0 0 10px #00cfff,
-            0 0 30px rgba(0, 207, 255, 0.5);
+            0 0 8px #00bfff,
+            0 0 25px rgba(0,191,255,.5);
+
+        margin-top: 5px;
     }
 
-    /* Subtítulo */
-    .valtair-subtitulo {
+
+    .valtair-subtitle {
         text-align: center;
-        color: #558899;
-        letter-spacing: 4px;
-        font-size: 11px;
-        margin-bottom: 20px;
+
+        color: #248db5;
+
+        font-size: 9px;
+
+        letter-spacing: 6px;
+
+        margin-top: 5px;
     }
 
-    /* Núcleo */
-    .valtair-core {
-        width: 120px;
-        height: 120px;
-        margin: 25px auto;
+
+    /* HUD */
+    .hud {
+        position: relative;
+
+        height: 390px;
+
+        margin-top: 15px;
+        margin-bottom: 20px;
+
+        border-top:
+            1px solid rgba(0,190,255,.25);
+
+        border-bottom:
+            1px solid rgba(0,190,255,.15);
+
+        overflow: hidden;
+    }
+
+
+    /* LINHA SUPERIOR */
+    .hud-line {
+        position: absolute;
+
+        top: 25px;
+        left: 5%;
+
+        width: 90%;
+        height: 1px;
+
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                #00bfff,
+                transparent
+            );
+
+        box-shadow:
+            0 0 8px #00bfff;
+    }
+
+
+    /* CÍRCULO EXTERNO */
+    .hud-circle-1 {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        width: 270px;
+        height: 270px;
+
+        border-radius: 50%;
+
+        border:
+            2px solid rgba(0,190,255,.35);
+
+        box-shadow:
+            0 0 30px rgba(0,190,255,.15);
+
+        animation:
+            rotateHUD 20s linear infinite;
+    }
+
+
+    .hud-circle-1::before {
+        content: "";
+
+        position: absolute;
+
+        inset: 18px;
+
+        border-radius: 50%;
+
+        border:
+            8px dashed rgba(0,190,255,.40);
+
+        animation:
+            rotateInside 12s linear infinite;
+    }
+
+
+    /* CÍRCULO MÉDIO */
+    .hud-circle-2 {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        width: 195px;
+        height: 195px;
+
+        border-radius: 50%;
+
+        border:
+            3px dotted rgba(55,210,255,.70);
+
+        box-shadow:
+            inset 0 0 30px rgba(0,190,255,.12),
+            0 0 15px rgba(0,190,255,.15);
+
+        animation:
+            rotateHUDReverse 9s linear infinite;
+    }
+
+
+    /* CÍRCULO INTERNO */
+    .hud-circle-3 {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        width: 125px;
+        height: 125px;
+
+        border-radius: 50%;
+
+        border:
+            5px dashed rgba(0,220,255,.60);
+
+        animation:
+            rotateHUD 6s linear infinite;
+    }
+
+
+    /* NÚCLEO */
+    .hud-core {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        width: 55px;
+        height: 55px;
 
         border-radius: 50%;
 
@@ -211,62 +378,200 @@ def configurar_visual():
             radial-gradient(
                 circle,
                 #ffffff 0%,
-                #54efff 8%,
-                #00bde8 22%,
-                #004d70 48%,
-                transparent 70%
+                #9bf5ff 5%,
+                #00d9ff 18%,
+                #007da8 40%,
+                rgba(0,80,120,.2) 65%,
+                transparent 75%
             );
 
-        border: 1px solid #00d9ff;
-
         box-shadow:
-            0 0 15px #00d9ff,
-            0 0 40px rgba(0, 217, 255, 0.7),
-            0 0 80px rgba(0, 217, 255, 0.25);
+            0 0 10px #00d9ff,
+            0 0 30px #00bfff,
+            0 0 60px rgba(0,190,255,.7),
+            0 0 100px rgba(0,190,255,.25);
 
-        animation: pulsar 2s infinite ease-in-out;
+        animation:
+            pulseCore 2s ease-in-out infinite;
     }
 
-    @keyframes pulsar {
+
+    /* PAINEL ESQUERDO */
+    .left-panel {
+        position: absolute;
+
+        left: 25px;
+        top: 90px;
+
+        width: 220px;
+
+        color: #28bde9;
+
+        font-family: monospace;
+        font-size: 10px;
+
+        line-height: 1.9;
+
+        opacity: .75;
+
+        border-left:
+            2px solid rgba(0,190,255,.5);
+
+        padding-left: 15px;
+    }
+
+
+    /* PAINEL DIREITO */
+    .right-panel {
+        position: absolute;
+
+        right: 25px;
+        top: 90px;
+
+        width: 220px;
+
+        text-align: right;
+
+        color: #28bde9;
+
+        font-family: monospace;
+        font-size: 10px;
+
+        line-height: 1.9;
+
+        opacity: .75;
+
+        border-right:
+            2px solid rgba(0,190,255,.5);
+
+        padding-right: 15px;
+    }
+
+
+    /* STATUS */
+    .core-status {
+        position: absolute;
+
+        left: 50%;
+        bottom: 20px;
+
+        transform: translateX(-50%);
+
+        font-family: monospace;
+
+        font-size: 9px;
+
+        letter-spacing: 4px;
+
+        color: #00d9ff;
+
+        text-shadow:
+            0 0 10px #00bfff;
+    }
+
+
+    /* ANIMAÇÕES */
+    @keyframes rotateHUD {
+
+        from {
+            transform:
+                translate(-50%, -50%)
+                rotate(0deg);
+        }
+
+        to {
+            transform:
+                translate(-50%, -50%)
+                rotate(360deg);
+        }
+    }
+
+
+    @keyframes rotateHUDReverse {
+
+        from {
+            transform:
+                translate(-50%, -50%)
+                rotate(360deg);
+        }
+
+        to {
+            transform:
+                translate(-50%, -50%)
+                rotate(0deg);
+        }
+    }
+
+
+    @keyframes rotateInside {
+
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(-360deg);
+        }
+    }
+
+
+    @keyframes pulseCore {
 
         0%, 100% {
-            transform: scale(0.93);
-            opacity: 0.8;
+            transform:
+                translate(-50%, -50%)
+                scale(.90);
+
+            opacity: .75;
         }
 
         50% {
-            transform: scale(1.08);
+            transform:
+                translate(-50%, -50%)
+                scale(1.12);
+
             opacity: 1;
         }
     }
 
-    /* Status */
-    .valtair-status {
-        text-align: center;
-        color: #00eaff;
-        font-size: 10px;
-        letter-spacing: 4px;
-        margin-bottom: 30px;
-    }
 
-    /* Mensagens */
+    /* CHAT */
     [data-testid="stChatMessage"] {
-        background: rgba(4, 20, 30, 0.75);
-        border: 1px solid rgba(0, 217, 255, 0.18);
-        border-radius: 15px;
-        backdrop-filter: blur(10px);
-        margin-bottom: 10px;
+        background:
+            linear-gradient(
+                90deg,
+                rgba(0,90,130,.10),
+                rgba(0,20,35,.60)
+            );
+
+        border:
+            1px solid rgba(0,190,255,.20);
+
+        border-left:
+            2px solid #009dcc;
+
+        border-radius: 4px;
+
+        backdrop-filter: blur(8px);
     }
 
-    /* Campo de mensagem */
+
+    /* INPUT */
     [data-testid="stChatInput"] {
-        background: rgba(2, 15, 24, 0.95);
-        border: 1px solid rgba(0, 217, 255, 0.35);
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 217, 255, 0.08);
+        background:
+            rgba(0,10,18,.96);
+
+        border:
+            1px solid rgba(0,190,255,.5);
+
+        border-radius: 4px;
+
+        box-shadow:
+            0 0 20px rgba(0,190,255,.12);
     }
 
-    /* Esconder menu padrão */
+
+    /* ESCONDER STREAMLIT */
     #MainMenu {
         visibility: hidden;
     }
@@ -275,24 +580,109 @@ def configurar_visual():
         visibility: hidden;
     }
 
+
+    /* CELULAR */
+    @media(max-width: 700px) {
+
+        .hud {
+            height: 300px;
+        }
+
+        .hud-circle-1 {
+            width: 200px;
+            height: 200px;
+        }
+
+        .hud-circle-2 {
+            width: 145px;
+            height: 145px;
+        }
+
+        .hud-circle-3 {
+            width: 90px;
+            height: 90px;
+        }
+
+        .left-panel,
+        .right-panel {
+            display: none;
+        }
+
+        .valtair-title {
+            font-size: 24px;
+            letter-spacing: 8px;
+        }
+    }
+
     </style>
 
 
-    <div class="valtair-titulo">
+    <div class="valtair-title">
         VALTAIR
     </div>
 
-    <div class="valtair-subtitulo">
-        INTELIGÊNCIA PESSOAL
+    <div class="valtair-subtitle">
+        VIRTUAL ARTIFICIAL INTELLIGENCE SYSTEM
     </div>
 
-    <div class="valtair-core"></div>
 
-    <div class="valtair-status">
-        ● SISTEMA ONLINE
+    <div class="hud">
+
+        <div class="hud-line"></div>
+
+
+        <div class="left-panel">
+
+            SYSTEM // VALTAIR<br>
+            CORE STATUS: ONLINE<br>
+            NEURAL LINK: ACTIVE<br>
+            VOICE ENGINE: READY<br>
+            MEMORY: STANDBY<br>
+            NETWORK: CONNECTED
+
+        </div>
+
+
+        <div class="right-panel">
+
+            ARTIFICIAL INTELLIGENCE<br>
+            GEMINI ENGINE<br>
+            VOICE SYNTHESIS<br>
+            SECURE CHANNEL<br>
+            CORE SYSTEM 01<br>
+            STATUS // ACTIVE
+
+        </div>
+
+
+        <div class="hud-circle-1"></div>
+
+        <div class="hud-circle-2"></div>
+
+        <div class="hud-circle-3"></div>
+
+        <div class="hud-core"></div>
+
+
+        <div class="core-status">
+            ● VALTAIR ONLINE
+        </div>
+
     </div>
 
     """, unsafe_allow_html=True)
+
+
+# =========================================================
+# ATIVAR VISUAL
+# =========================================================
+
+configurar_visual()
+
+
+# =========================================================
+# FUNÇÃO - GERAR RESPOSTA COM GEMINI
+# =========================================================
 def gerar_resposta():
 
     mensagens_recentes = st.session_state.mensagens[-12:]
