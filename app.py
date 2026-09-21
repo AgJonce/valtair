@@ -92,21 +92,40 @@ if pergunta:
             historico += f"VALTAIR: {mensagem['content']}\n"
 
     try:
+        modelos = [
+            "gemini-2.5-flash-lite",
+            "gemini-2.5-flash"
+        ]
 
-        resposta_api = client.models.generate_content(
-            model="gemini-3.1-flash-lite",
-            contents=historico,
-            config=types.GenerateContentConfig(
-                system_instruction=PERSONALIDADE,
-                temperature=0.9,
-                max_output_tokens=500
-            )
-        )
+        resposta = None
+        ultimo_erro = None
 
-        resposta = resposta_api.text
+        for modelo in modelos:
+            try:
+                resposta_api = client.models.generate_content(
+                    model=modelo,
+                    contents=historico,
+                    config=types.GenerateContentConfig(
+                        system_instruction=PERSONALIDADE,
+                        temperature=0.9,
+                        max_output_tokens=500
+                    )
+                )
+
+                resposta = resposta_api.text
+                break
+
+            except Exception as erro:
+                ultimo_erro = erro
+
+        if resposta is None:
+            raise ultimo_erro
 
     except Exception as erro:
-        resposta = f"Rapaz... deu ruim aqui 😂: {erro}"
+        resposta = (
+            "Rapaz... hoje meus neurônios estão de greve 😂 "
+            f"O Google não respondeu. Erro: {erro}"
+        )
 
     st.session_state.mensagens.append({
         "role": "assistant",
