@@ -160,7 +160,139 @@ if "mensagens" not in st.session_state:
 # =========================================================
 # FUNÇÃO - GERAR RESPOSTA COM GEMINI
 # =========================================================
+def configurar_visual():
 
+    st.markdown("""
+    <style>
+
+    /* Fundo futurista */
+    .stApp {
+        background:
+            radial-gradient(circle at top, #08263a 0%, #02070d 45%, #000000 100%);
+        color: #e8faff;
+    }
+
+    /* Área principal */
+    .block-container {
+        max-width: 900px;
+        padding-top: 2rem;
+    }
+
+    /* Título */
+    .valtair-titulo {
+        text-align: center;
+        font-size: 42px;
+        font-weight: 700;
+        letter-spacing: 10px;
+        color: #8befff;
+        text-shadow:
+            0 0 10px #00cfff,
+            0 0 30px rgba(0, 207, 255, 0.5);
+    }
+
+    /* Subtítulo */
+    .valtair-subtitulo {
+        text-align: center;
+        color: #558899;
+        letter-spacing: 4px;
+        font-size: 11px;
+        margin-bottom: 20px;
+    }
+
+    /* Núcleo */
+    .valtair-core {
+        width: 120px;
+        height: 120px;
+        margin: 25px auto;
+
+        border-radius: 50%;
+
+        background:
+            radial-gradient(
+                circle,
+                #ffffff 0%,
+                #54efff 8%,
+                #00bde8 22%,
+                #004d70 48%,
+                transparent 70%
+            );
+
+        border: 1px solid #00d9ff;
+
+        box-shadow:
+            0 0 15px #00d9ff,
+            0 0 40px rgba(0, 217, 255, 0.7),
+            0 0 80px rgba(0, 217, 255, 0.25);
+
+        animation: pulsar 2s infinite ease-in-out;
+    }
+
+    @keyframes pulsar {
+
+        0%, 100% {
+            transform: scale(0.93);
+            opacity: 0.8;
+        }
+
+        50% {
+            transform: scale(1.08);
+            opacity: 1;
+        }
+    }
+
+    /* Status */
+    .valtair-status {
+        text-align: center;
+        color: #00eaff;
+        font-size: 10px;
+        letter-spacing: 4px;
+        margin-bottom: 30px;
+    }
+
+    /* Mensagens */
+    [data-testid="stChatMessage"] {
+        background: rgba(4, 20, 30, 0.75);
+        border: 1px solid rgba(0, 217, 255, 0.18);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        margin-bottom: 10px;
+    }
+
+    /* Campo de mensagem */
+    [data-testid="stChatInput"] {
+        background: rgba(2, 15, 24, 0.95);
+        border: 1px solid rgba(0, 217, 255, 0.35);
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 217, 255, 0.08);
+    }
+
+    /* Esconder menu padrão */
+    #MainMenu {
+        visibility: hidden;
+    }
+
+    footer {
+        visibility: hidden;
+    }
+
+    </style>
+
+
+    <div class="valtair-titulo">
+        VALTAIR
+    </div>
+
+    <div class="valtair-subtitulo">
+        INTELIGÊNCIA PESSOAL
+    </div>
+
+    <div class="valtair-core"></div>
+
+    <div class="valtair-status">
+        ● SISTEMA ONLINE
+    </div>
+
+    """, unsafe_allow_html=True)
 def gerar_resposta():
 
     mensagens_recentes = st.session_state.mensagens[-12:]
